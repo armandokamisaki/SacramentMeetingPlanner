@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SacramentMeetingPlanner.Data;
 
 namespace SacramentMeetingPlanner.Migrations
 {
     [DbContext(typeof(PlannerContext))]
-    partial class PlannerContextModelSnapshot : ModelSnapshot
+    [Migration("20230708142233_Rating")]
+    partial class Rating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,7 @@ namespace SacramentMeetingPlanner.Migrations
                         .IsRequired();
 
                     b.HasOne("SacramentMeetingPlanner.Models.Planner", "Planner")
-                        .WithMany("Speakers")
+                        .WithMany()
                         .HasForeignKey("PlannerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -162,11 +164,6 @@ namespace SacramentMeetingPlanner.Migrations
                     b.Navigation("Member");
 
                     b.Navigation("Planner");
-                });
-
-            modelBuilder.Entity("SacramentMeetingPlanner.Models.Planner", b =>
-                {
-                    b.Navigation("Speakers");
                 });
 #pragma warning restore 612, 618
         }

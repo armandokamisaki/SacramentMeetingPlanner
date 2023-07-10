@@ -19,8 +19,14 @@
                 @Html.DisplayNameFor(model => model.Member1ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Speaker4ID)
-            </th>            
+                @Html.DisplayNameFor(model => model.Member2ID)
+            </th>  
+            <th>
+                @Html.DisplayNameFor(model => model.Member3ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member4ID)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -31,15 +37,21 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Member1ID)
+                @Html.DisplayFor(modelItem => item.Member.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Speaker.Member.FullName)
-            </td>            
+                @Html.DisplayFor(modelItem => item.Member.FullName)
+            </td>  
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PlannerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PlannerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PlannerId">Delete</a>
+                @Html.DisplayFor(modelItem => item.Member.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.FullName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PlannerID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PlannerID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PlannerID">Delete</a>
             </td>
         </tr>
 }

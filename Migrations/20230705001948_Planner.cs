@@ -5,6 +5,10 @@ namespace SacramentMeetingPlanner.Migrations
 {
     public partial class Planner : Migration
     {
+        public int PlannerID { get; internal set; }
+        public object Member1ID { get; internal set; }
+        public object Hymn1ID { get; internal set; }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SacramentMeetingPlanner.Data;
+using SacramentMeetingPlanner.Migrations;
 using SacramentMeetingPlanner.Models;
 
 namespace SacramentMeetingPlanner.Controllers
@@ -22,7 +24,12 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: Planners
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Planner.ToListAsync());
+            var planners = _context.Planner
+            .Include(c => c.Member) 
+            .Include(c => c.Hymn)
+            .AsNoTracking();
+            return View(await planners.ToListAsync());
+            
         }
 
         // GET: Planners/Details/5
@@ -34,7 +41,10 @@ namespace SacramentMeetingPlanner.Controllers
             }
 
             var planner = await _context.Planner
-                .FirstOrDefaultAsync(m => m.PlannerId == id);
+            .Include(c => c.Member)
+            .Include(c => c.Hymn)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.PlannerID == id);            
             if (planner == null)
             {
                 return NotFound();
@@ -46,15 +56,20 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: Planners/Create
         public IActionResult Create()
         {
+            
+            PopulateMembersDropDownList();
+            //PopulateHymnsDropDownList(hymn);
             return View();
         }
+
+        
 
         // POST: Planners/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlannerId,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,Speaker1ID,Speaker2ID,Speaker3ID,SpecialHymn,Speaker4ID,Hymn3ID,Member4ID,Hymn4ID")] Planner planner)
+        public async Task<IActionResult> Create([Bind("PlannerID,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,SpecialHymn,Hymn3ID,Member4ID,Hymn4ID")] Migrations.Planner planner)
         {
             if (ModelState.IsValid)
             {
@@ -62,8 +77,11 @@ namespace SacramentMeetingPlanner.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            PopulateMembersDropDownList(planner.Member1ID);
+            //PopulateHymnsDropDownList(planner.Hymn1ID);
             return View(planner);
         }
+       
 
         // GET: Planners/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -73,11 +91,15 @@ namespace SacramentMeetingPlanner.Controllers
                 return NotFound();
             }
 
-            var planner = await _context.Planner.FindAsync(id);
+            var planner = await _context.Planner
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.PlannerID == id);            
             if (planner == null)
             {
                 return NotFound();
             }
+            PopulateMembersDropDownList(planner.Member1ID);
+            //PopulateHymnsDropDownList(planner.Hymn1ID);
             return View(planner);
         }
 
@@ -86,9 +108,9 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlannerId,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,Speaker1ID,Speaker2ID,Speaker3ID,SpecialHymn,Speaker4ID,Hymn3ID,Member4ID,Hymn4ID")] Planner planner)
+        public async Task<IActionResult> Edit(int id, [Bind("PlannerID,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,SpecialHymn,Hymn3ID,Member4ID,Hymn4ID")] Migrations.Planner planner)
         {
-            if (id != planner.PlannerId)
+            if (id != planner.PlannerID)
             {
                 return NotFound();
             }
@@ -102,7 +124,7 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PlannerExists(planner.PlannerId))
+                    if (!PlannerExists(planner.PlannerID))
                     {
                         return NotFound();
                     }
@@ -113,6 +135,8 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            PopulateMembersDropDownList(planner.Member1ID);
+            //PopulateHymnsDropDownList(planner.Hymn1ID);
             return View(planner);
         }
 
@@ -125,7 +149,7 @@ namespace SacramentMeetingPlanner.Controllers
             }
 
             var planner = await _context.Planner
-                .FirstOrDefaultAsync(m => m.PlannerId == id);
+                .FirstOrDefaultAsync(m => m.PlannerID == id);
             if (planner == null)
             {
                 return NotFound();
@@ -145,9 +169,31 @@ namespace SacramentMeetingPlanner.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private void PopulateMembersDropDownList(object selectedMember = null)
+        {
+            var membersQuery = from d in _context.Member
+                                   orderby d.FirstName
+                                   select d;
+            ViewBag.MemberID = new SelectList(membersQuery.AsNoTracking(), "MemberId", "FirstName", selectedMember);
+
+            var hymnsQuery = from e in _context.Hymn
+                             orderby e.HymnName
+                             select e;
+            ViewBag.HymnID = new SelectList(hymnsQuery.AsNoTracking(), "HymnId", "HymnName", selectedMember);
+
+        }
+
+        //private void PopulateHymnsDropDownList(object selectedHymn = null)
+        //{
+            //var hymnsQuery = from e in _context.Hymn
+                             //orderby e.HymnName
+                             //select e;
+           // ViewBag.HymnID = new SelectList(hymnsQuery.AsNoTracking(), "HymnId", "HymnName", selectedHymn);
+        //}
+
         private bool PlannerExists(int id)
         {
-            return _context.Planner.Any(e => e.PlannerId == id);
+            return _context.Planner.Any(e => e.PlannerID == id);
         }
     }
 }
