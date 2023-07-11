@@ -56,7 +56,7 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: Planners/Create
         public IActionResult Create()
         {
-            
+            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
             PopulateMembersDropDownList();
             //PopulateHymnsDropDownList(hymn);
             return View();
@@ -78,6 +78,7 @@ namespace SacramentMeetingPlanner.Controllers
                 return RedirectToAction(nameof(Index));
             }
             PopulateMembersDropDownList(planner.Member1ID);
+            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
             //PopulateHymnsDropDownList(planner.Hymn1ID);
             return View(planner);
         }
@@ -176,10 +177,10 @@ namespace SacramentMeetingPlanner.Controllers
                                    select d;
             ViewBag.MemberID = new SelectList(membersQuery.AsNoTracking(), "MemberId", "FirstName", selectedMember);
 
-            var hymnsQuery = from e in _context.Hymn
-                             orderby e.HymnName
-                             select e;
-            ViewBag.HymnID = new SelectList(hymnsQuery.AsNoTracking(), "HymnId", "HymnName", selectedMember);
+            //var hymnsQuery = from e in _context.Hymn
+                             //orderby e.HymnName
+                             //select e;
+            //ViewBag.HymnID = new SelectList(hymnsQuery.AsNoTracking(), "HymnId", "HymnName", selectedMember);
 
         }
 
