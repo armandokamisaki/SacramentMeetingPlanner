@@ -9,13 +9,7 @@
 <div>
     <h4>Speaker</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+    <dl class="row">        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Topic)
         </dt>
@@ -29,10 +23,10 @@
             @Html.DisplayFor(model => model.Member.MemberId)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Planner)
+            @Html.DisplayNameFor(model => model.Planner.Date)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Planner.PlannerID)
+            @Html.DisplayFor(model => model.Planner.Date)
         </dd>
     </dl>
 </div>
