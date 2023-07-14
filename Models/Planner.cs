@@ -27,7 +27,7 @@ namespace SacramentMeetingPlanner.Models
         [Display(Name = "Sacrament Hymn")]
         [ForeignKey("HymnID")]
         public int Hymn2ID { get; set; }
-        public String? SpecialHymn { get; set; }
+        public String SpecialHymn { get; set; }
         [Display(Name = "Closing Hymn")]
         [ForeignKey("HymnID")]
         public int Hymn3ID { get; set; }
