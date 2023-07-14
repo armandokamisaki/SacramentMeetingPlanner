@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SacramentMeetingPlanner.Data;
-using SacramentMeetingPlanner.Migrations;
 using SacramentMeetingPlanner.Models;
 
 namespace SacramentMeetingPlanner.Controllers
@@ -69,7 +68,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlannerID,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,SpecialHymn,Hymn3ID,Member4ID,Hymn4ID")] Migrations.Planner planner)
+        public async Task<IActionResult> Create([Bind("PlannerID,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,SpecialHymn,Hymn3ID,Member4ID,Hymn4ID")] Planner planner)
         {
             if (ModelState.IsValid)
             {
