@@ -16,17 +16,17 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Member1ID)
+                @Html.DisplayNameFor(model => model.President)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Member2ID)
+                @Html.DisplayNameFor(model => model.Conducting)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Invocation)
             </th>  
             <th>
-                @Html.DisplayNameFor(model => model.Member3ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Member4ID)
-            </th>
+                @Html.DisplayNameFor(model => model.Benediction)
+            </th>            
             <th></th>
         </tr>
     </thead>
@@ -37,16 +37,16 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Member.FullName)
+                @Html.DisplayFor(modelItem => item.President)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Member.FullName)
+                @Html.DisplayFor(modelItem => item.Conducting)
             </td>  
             <td>
-                @Html.DisplayFor(modelItem => item.Member.FullName)
+                @Html.DisplayFor(modelItem => item.Invocation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Member.FullName)
+                @Html.DisplayFor(modelItem => item.Benediction)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PlannerID">Edit</a> |

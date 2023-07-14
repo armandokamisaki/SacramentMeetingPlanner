@@ -12,18 +12,14 @@ namespace SacramentMeetingPlanner.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
-        [Display(Name = "President")]
-        [ForeignKey("MemberID")]
-        public int Member1ID { get; set; }
+        public string President { get; set; }
         [Display(Name = "Conducting")]
         [ForeignKey("MemberID")]
-        public int Member2ID { get; set; }
+        public string Conducting { get; set; }
         [Display(Name = "Opening Hymn")]
         [ForeignKey("HymnID")]
         public int Hymn1ID { get; set; }
-        [Display(Name = "Invocation")]
-        [ForeignKey("MemberID")]
-        public int Member3ID { get; set; }
+        public string Invocation { get; set; }
         [Display(Name = "Sacrament Hymn")]
         [ForeignKey("HymnID")]
         public int Hymn2ID { get; set; }
@@ -31,9 +27,7 @@ namespace SacramentMeetingPlanner.Models
         [Display(Name = "Closing Hymn")]
         [ForeignKey("HymnID")]
         public int Hymn3ID { get; set; }
-        [Display(Name = "Benediction")]
-        [ForeignKey("MemberID")]
-        public int Member4ID { get; set; }
+        public string Benediction{ get; set; }
         [Display(Name = "Dismissal Song")]
         [ForeignKey("HymnID")]
         public int? Hymn4ID { get; set; }

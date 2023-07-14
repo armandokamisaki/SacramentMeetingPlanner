@@ -8,6 +8,7 @@ namespace SacramentMeetingPlanner.Migrations
         public int PlannerID { get; internal set; }
         public object Member1ID { get; internal set; }
         public object Hymn1ID { get; internal set; }
+        public object President { get; internal set; }
 
         protected override void Up(MigrationBuilder migrationBuilder)
         {

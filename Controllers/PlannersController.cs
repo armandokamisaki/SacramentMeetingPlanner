@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SacramentMeetingPlanner.Data;
-using SacramentMeetingPlanner.Migrations;
 using SacramentMeetingPlanner.Models;
 
 namespace SacramentMeetingPlanner.Controllers
@@ -57,6 +56,7 @@ namespace SacramentMeetingPlanner.Controllers
         public IActionResult Create()
         {
             ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
+            
             PopulateMembersDropDownList();
             //PopulateHymnsDropDownList(hymn);
             return View();
@@ -69,7 +69,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlannerID,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,SpecialHymn,Hymn3ID,Member4ID,Hymn4ID")] Migrations.Planner planner)
+        public async Task<IActionResult> Create([Bind("PlannerID,Date,President,Conducting,Hymn1ID,Invocation,Hymn2ID,SpecialHymn,Hymn3ID,Benediction,Hymn4ID")] Planner planner)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +77,8 @@ namespace SacramentMeetingPlanner.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            PopulateMembersDropDownList(planner.Member1ID);
+            PopulateMembersDropDownList(planner.President);
+            
             ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
             //PopulateHymnsDropDownList(planner.Hymn1ID);
             return View(planner);
@@ -99,8 +100,9 @@ namespace SacramentMeetingPlanner.Controllers
             {
                 return NotFound();
             }
-            PopulateMembersDropDownList(planner.Member1ID);
-            //PopulateHymnsDropDownList(planner.Hymn1ID);
+            PopulateMembersDropDownList(planner.President);
+            //PopulateHymnsDropDownList(planner.Hymn1ID);            
+            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
             return View(planner);
         }
 
@@ -109,7 +111,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlannerID,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,SpecialHymn,Hymn3ID,Member4ID,Hymn4ID")] Migrations.Planner planner)
+        public async Task<IActionResult> Edit(int id, [Bind("PlannerID,Date,President,Conducting,Hymn1ID,Invocation,Hymn2ID,SpecialHymn,Hymn3ID,Benediction,Hymn4ID")] Migrations.Planner planner)
         {
             if (id != planner.PlannerID)
             {
@@ -136,8 +138,9 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateMembersDropDownList(planner.Member1ID);
-            //PopulateHymnsDropDownList(planner.Hymn1ID);
+            PopulateMembersDropDownList(planner.President);
+            //PopulateHymnsDropDownList(planner.Hymn1ID);            
+            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
             return View(planner);
         }
 
