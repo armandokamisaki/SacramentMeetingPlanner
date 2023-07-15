@@ -20,7 +20,7 @@ namespace SacramentMeetingPlanner.Models
         public int Member3ID { get; set; }
         [Display(Name = "Sacrament Hymn")]
         public int Hymn2ID { get; set; }
-        public String? SpecialHymn { get; set; }
+        public String SpecialHymn { get; set; }
         [Display(Name = "Closing Hymn")]
         public int Hymn3ID { get; set; }
         [Display(Name = "Benediction")]
