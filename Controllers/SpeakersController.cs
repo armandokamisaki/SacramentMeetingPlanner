@@ -49,8 +49,8 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: Speakers/Create
         public IActionResult Create()
         {
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberId", "MemberId");
-            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "PlannerID");
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName");
+            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "Date");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SpeakerID,Date,PlannerID,MemberID,Topic")] Speaker speaker)
+        public async Task<IActionResult> Create([Bind("SpeakerID,PlannerID,MemberName,Topic")] Speaker speaker)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +67,8 @@ namespace SacramentMeetingPlanner.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberId", "MemberId", speaker.MemberID);
-            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "PlannerID", speaker.PlannerID);
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName", speaker.MemberName);
+            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "Date", speaker.PlannerID);
             return View(speaker);
         }
 
@@ -85,8 +85,8 @@ namespace SacramentMeetingPlanner.Controllers
             {
                 return NotFound();
             }
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberId", "MemberId", speaker.MemberID);
-            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "PlannerID", speaker.PlannerID);
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName", speaker.MemberName);
+            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "Date", speaker.PlannerID);
             return View(speaker);
         }
 
@@ -95,7 +95,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SpeakerID,Date,PlannerID,MemberID,Topic")] Speaker speaker)
+        public async Task<IActionResult> Edit(int id, [Bind("SpeakerID,PlannerID,MemberName,Topic")] Speaker speaker)
         {
             if (id != speaker.SpeakerID)
             {
@@ -122,8 +122,8 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberID"] = new SelectList(_context.Member, "MemberId", "MemberId", speaker.MemberID);
-            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "PlannerID", speaker.PlannerID);
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName", speaker.MemberName);
+            ViewData["PlannerID"] = new SelectList(_context.Planner, "PlannerID", "Date", speaker.PlannerID);
             return View(speaker);
         }
 

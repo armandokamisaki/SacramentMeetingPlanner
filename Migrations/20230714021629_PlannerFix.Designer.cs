@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SacramentMeetingPlanner.Data;
 
 namespace SacramentMeetingPlanner.Migrations
 {
     [DbContext(typeof(PlannerContext))]
-    partial class PlannerContextModelSnapshot : ModelSnapshot
+    [Migration("20230714021629_PlannerFix")]
+    partial class PlannerFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,11 +111,11 @@ namespace SacramentMeetingPlanner.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("MemberId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("MemberName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MemberID")
+                        .HasColumnType("int");
 
                     b.Property<int>("PlannerID")
                         .HasColumnType("int");
@@ -123,7 +125,7 @@ namespace SacramentMeetingPlanner.Migrations
 
                     b.HasKey("SpeakerID");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("MemberID");
 
                     b.HasIndex("PlannerID");
 
@@ -149,7 +151,9 @@ namespace SacramentMeetingPlanner.Migrations
                 {
                     b.HasOne("SacramentMeetingPlanner.Models.Member", "Member")
                         .WithMany()
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("MemberID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SacramentMeetingPlanner.Models.Planner", "Planner")
                         .WithMany("Speakers")

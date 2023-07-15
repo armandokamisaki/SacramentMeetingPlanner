@@ -55,7 +55,7 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: Planners/Create
         public IActionResult Create()
         {
-            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
+            ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
             
             PopulateMembersDropDownList();
             //PopulateHymnsDropDownList(hymn);
@@ -69,7 +69,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlannerID,Date,Member1ID,Member2ID,Hymn1ID,Member3ID,Hymn2ID,SpecialHymn,Hymn3ID,Member4ID,Hymn4ID")] Migrations.Planner planner)
+        public async Task<IActionResult> Create([Bind("PlannerID,Date,President,Conducting,OpeningHymn,Invocation,SacramentHymn,SpecialHymn,ClosingHymn,Benediction,DismissalSong")] Planner planner)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace SacramentMeetingPlanner.Controllers
             }
             PopulateMembersDropDownList(planner.President);
             
-            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
+            ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
             //PopulateHymnsDropDownList(planner.Hymn1ID);
             return View(planner);
         }
@@ -102,7 +102,7 @@ namespace SacramentMeetingPlanner.Controllers
             }
             PopulateMembersDropDownList(planner.President);
             //PopulateHymnsDropDownList(planner.Hymn1ID);            
-            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
+            ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
             return View(planner);
         }
 
@@ -111,7 +111,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlannerID,Date,President,Conducting,Hymn1ID,Invocation,Hymn2ID,SpecialHymn,Hymn3ID,Benediction,Hymn4ID")] Migrations.Planner planner)
+        public async Task<IActionResult> Edit(int id, [Bind("PlannerID,Date,President,Conducting,OpeningHymn,Invocation,SacramentHymn,SpecialHymn,ClosingHymn,Benediction,DismissalSong")] Migrations.Planner planner)
         {
             if (id != planner.PlannerID)
             {
@@ -140,7 +140,7 @@ namespace SacramentMeetingPlanner.Controllers
             }
             PopulateMembersDropDownList(planner.President);
             //PopulateHymnsDropDownList(planner.Hymn1ID);            
-            ViewData["HymnID"] = new SelectList(_context.Hymn, "HymnID", "HymnName");
+            ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
             return View(planner);
         }
 
@@ -178,7 +178,7 @@ namespace SacramentMeetingPlanner.Controllers
             var membersQuery = from d in _context.Member
                                    orderby d.FirstName
                                    select d;
-            ViewBag.MemberID = new SelectList(membersQuery.AsNoTracking(), "MemberId", "FirstName", selectedMember);
+            ViewBag.FullName = new SelectList(membersQuery.AsNoTracking(), "FirstName", "FirstName", selectedMember);
 
             //var hymnsQuery = from e in _context.Hymn
                              //orderby e.HymnName
