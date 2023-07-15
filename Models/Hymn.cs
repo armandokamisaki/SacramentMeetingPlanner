@@ -8,6 +8,9 @@ namespace SacramentMeetingPlanner.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Hymn #")]
         public int HymnID { get; set; }
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Hymn Name")]
         public string HymnName { get; set;}
 
         public string HymnDescription

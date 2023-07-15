@@ -42,27 +42,31 @@ namespace SacramentMeetingPlanner.Controllers
             var planner = await _context.Planner
             .Include(c => c.Member)
             .Include(c => c.Hymn)
+            .Include(s => s.Speakers)                  
             .AsNoTracking()
             .FirstOrDefaultAsync(m => m.PlannerID == id);            
             if (planner == null)
             {
                 return NotFound();
             }
+            
 
             return View(planner);
+           
         }
 
         // GET: Planners/Create
         public IActionResult Create()
         {
             ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
-            
-            PopulateMembersDropDownList();
-            //PopulateHymnsDropDownList(hymn);
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName");
+            //PopulateMembersDropDownList();
+
             return View();
         }
 
-        
+       
+
 
         // POST: Planners/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -75,12 +79,12 @@ namespace SacramentMeetingPlanner.Controllers
             {
                 _context.Add(planner);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Speakers");
             }
-            PopulateMembersDropDownList(planner.President);
-            
+            //PopulateMembersDropDownList(planner.President);
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName");
             ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
-            //PopulateHymnsDropDownList(planner.Hymn1ID);
+            
             return View(planner);
         }
        
@@ -100,8 +104,8 @@ namespace SacramentMeetingPlanner.Controllers
             {
                 return NotFound();
             }
-            PopulateMembersDropDownList(planner.President);
-            //PopulateHymnsDropDownList(planner.Hymn1ID);            
+            //PopulateMembersDropDownList(planner.President);
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName");
             ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
             return View(planner);
         }
@@ -138,8 +142,8 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateMembersDropDownList(planner.President);
-            //PopulateHymnsDropDownList(planner.Hymn1ID);            
+            //PopulateMembersDropDownList(planner.President);
+            ViewData["FullName"] = new SelectList(_context.Member, "FullName", "FullName");
             ViewData["HymnName"] = new SelectList(_context.Hymn, "HymnName", "HymnName");
             return View(planner);
         }

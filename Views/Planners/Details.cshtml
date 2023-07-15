@@ -47,7 +47,29 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SpecialHymn)
-        </dd>        
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Speakers)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Member Name</th>
+                    <th>Topic</th>
+                </tr>
+                @foreach (var item in Model.Speakers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MemberName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Topic)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ClosingHymn)
         </dt>

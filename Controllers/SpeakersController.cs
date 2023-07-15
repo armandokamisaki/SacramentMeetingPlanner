@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SacramentMeetingPlanner.Data;
+using SacramentMeetingPlanner.Migrations;
 using SacramentMeetingPlanner.Models;
 
 namespace SacramentMeetingPlanner.Controllers
@@ -59,7 +60,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SpeakerID,PlannerID,MemberName,Topic")] Speaker speaker)
+        public async Task<IActionResult> Create([Bind("SpeakerID,PlannerID,MemberName,Topic")] Models.Speaker speaker)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +96,7 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SpeakerID,PlannerID,MemberName,Topic")] Speaker speaker)
+        public async Task<IActionResult> Edit(int id, [Bind("SpeakerID,PlannerID,MemberName,Topic")] Models.Speaker speaker)
         {
             if (id != speaker.SpeakerID)
             {
